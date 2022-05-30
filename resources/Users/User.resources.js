@@ -2,18 +2,48 @@ const UserSchema = require("./User.schema");
 
 module.exports = class UserResources {
     async createOne(data) {
+        console.log("UserResources@createOne")
         if (!data || data === '')
             throw new Error;
         let results
         try {
-            results = await UserSchema(data)
+            results = await UserSchema.create(data)
         } catch (error) {
-            console.log("Eroor@createOne", error)
+            console.log("Error@createOne", error)
+            return false
         }
         if (!results)
             return false
-        results.save()
         return results
-
+    }
+    async findOneEmail(email) {
+        console.log("UserResources@findOneEmail")
+        if (!email || email === "")
+            throw new Error("email is required")
+        let results
+        try {
+            results = await UserSchema.findOne({ email })
+        } catch (error) {
+            console.log(error.message)
+            return false;
+        }
+        if (!results)
+            return false;
+        return results;
+    }
+    async findAll() {
+        console.log("UserResources@findAll")
+        // if (!data || data === "")
+        // throw new Error("data is required")
+        let results
+        try {
+            results = await UserSchema.find()
+        } catch (error) {
+            console.log(error.message)
+            return false;
+        }
+        if (!results)
+            return false;
+        return results;
     }
 }

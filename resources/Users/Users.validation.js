@@ -16,14 +16,31 @@ module.exports = class UserValidation {
             status
         }
         let obj = joi.object(schema)
-        let validated
-        try {
-            validated = await obj.validateAsync(req.body)
-        } catch (error) {
-            console.log("error in validation :", error)
-            res.status(500).send(error)
+        let { error } = obj.validate(req.body)
+        let errors = []
+        if (error) {
+            error.details.forEach(err => {
+                errors.push(err.message.replace(/["']/g, ""))
+            });
+            return res.status(400).send({ msg: "invalid req data", error: errors })
         }
-        if (validated)
-            next()
+        next()
+    }
+    async login(req, res, next) {
+        console.log("UserValidation@login")
+        const schema = {
+            email,
+            password
+        }
+        const obj = joi.object(schema)
+        let errors = []
+        let { error } = obj.validate(req.body)
+        if (error) {
+            error.details.forEach(err => {
+                errors.push(err.message.replace(/["']/g, ""))
+            })
+            return res.status(400).send({ msg: "invalid req data", error: errors })
+        }
+        next()
     }
 }
