@@ -44,7 +44,7 @@ module.exports = class UserController {
             return res.status(400).send({ msg: "Invalid email or password" })
         let token = await Tokens.jwtToken(user)
         res.cookie("isLoggedIn", token, { httpOnly: true })
-        return res.status(200).send({ msg: "User logged in successfully", user })
+        return res.status(200).send({ msg: "User logged in successfully", user: user, auth_token: token })
 
     }
     async getAllUsers(req, res) {

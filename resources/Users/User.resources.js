@@ -16,6 +16,21 @@ module.exports = class UserResources {
             return false
         return results
     }
+    async findById(userId) {
+        console.log("UserResources@createOne")
+        if (!userId || userId === '')
+            throw new Error;
+        let results
+        try {
+            results = await UserSchema.findById(userId).select("-password")
+        } catch (error) {
+            console.log("Error@createOne", error)
+            return false
+        }
+        if (!results)
+            return false
+        return results
+    }
     async findOneEmail(email) {
         console.log("UserResources@findOneEmail")
         if (!email || email === "")

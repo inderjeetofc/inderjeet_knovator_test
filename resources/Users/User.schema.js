@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt')
 
 
 const UserSchema = new mongoose.Schema({
+    _id: {
+        type: mongoose.SchemaTypes.ObjectId
+    },
     first_name: {
         type: String,
         minLength: 3,

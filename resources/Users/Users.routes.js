@@ -11,5 +11,5 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads' })
 routes.post('/signup', validate.signup,upload.single('user_img'), user.signup)
 routes.post('/login', validate.login, user.login)
-routes.get('/allUsers', auth.userAuthCookies, user.getAllUsers)
+routes.get('/allUsers', auth.userAuth, user.getAllUsers)
 module.exports = routes
