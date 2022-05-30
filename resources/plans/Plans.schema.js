@@ -17,7 +17,7 @@ const PlanSchema = new mongoose.Schema({
         required: true
     },
     ratingAverage: {
-        type: String,
+        type: Number,
         required: true
     },
     discount: {
@@ -36,7 +36,7 @@ const PlanSchema = new mongoose.Schema({
 });
 
 const PlanModel = mongoose.model('plan', PlanSchema);
-//immediate function
+// immediate function
 // (async function createPLan() {
 //     let plan = {
 //         name: "superFood",

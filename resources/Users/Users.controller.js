@@ -3,6 +3,7 @@ const _ = require('lodash')
 const UserResources = require("./User.resources")
 const _User = new UserResources()
 const tokens = require('../../utils/tokens')
+const eventEmitter = require('../../events/eventEmitter')
 const Tokens = new tokens()
 
 module.exports = class UserController {
@@ -20,10 +21,14 @@ module.exports = class UserController {
             return res.status(500).send({
                 msg: "Email is already taken !"
             })
+
         let user = await _User.createOne(data)
         if (!user) {
             return res.status(500).send("Something went wrong !")
         }
+        user.profile_img = req.file
+        await user.save()
+        eventEmitter.emit('user_registered', user)
         return res.status(200).send({
             msg: "User created successfully",
             payload: user

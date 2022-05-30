@@ -2,9 +2,12 @@
 require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
+const PlansSchema = require('../resources/plans/Plans.schema');
+const UserSchema = require('../resources/Users/User.schema');
 const app = express();
 app.use(express.static('public'));
-
+let user=await UserSchema.findById(req.id)
+let plan = await PlansSchema.findById(req.params.id)
 const YOUR_DOMAIN = 'http://localhost:4242';
 
 app.post('/create-checkout-session', async (req, res) => {
