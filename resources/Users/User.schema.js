@@ -37,6 +37,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['registered', 'guest']
     },
+    role: {
+        type: String,
+        enum: ['admin', 'user']
+    },
+    profile_img: {
+        type: String,
+        default: 'img/users/pics.jpeg'
+    },
     createdAt: {
         type: Date,
         default: Date.now(),
