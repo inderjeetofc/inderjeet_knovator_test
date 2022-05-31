@@ -21,7 +21,6 @@ module.exports = class UserController {
             return res.status(500).send({
                 msg: "Email is already taken !"
             })
-
         let user = await _User.createOne(data)
         if (!user) {
             return res.status(500).send("Something went wrong !")

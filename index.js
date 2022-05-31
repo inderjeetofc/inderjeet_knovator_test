@@ -3,6 +3,12 @@ const app = express()
 const port = 3000
 const mongoConnect = require("./config/mongodb")
 const cookieParser = require('cookie-parser')
+
+var cors = require('cors')
+
+app.use(cors())
+
+
 require("./resources/plans/Plans.schema")
 mongoConnect()
 app.use(express.json())
