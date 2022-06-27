@@ -1,19 +1,18 @@
 const joi = require('joi')
-let first_name = joi.string().required()
+let user_name = joi.string().required()
 let email = joi.string().email().required()
 let phone = joi.number().required()
 let password = joi.string().required()
-let status = joi.string().valid('registered', 'guest').required()
-
+let age = joi.number()
 module.exports = class UserValidation {
     async signup(req, res, next) {
         console.log("UserValidation@signup")
         let schema = {
-            first_name,
+            user_name,
             email,
             phone,
             password,
-            status
+            age
         }
         let obj = joi.object(schema)
         let { error } = obj.validate(req.body)

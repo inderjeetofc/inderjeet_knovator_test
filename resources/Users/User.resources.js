@@ -48,8 +48,6 @@ module.exports = class UserResources {
     }
     async findAll() {
         console.log("UserResources@findAll")
-        // if (!data || data === "")
-        // throw new Error("data is required")
         let results
         try {
             results = await UserSchema.find()

@@ -1,12 +1,50 @@
-const { findById, findByIdAndUpdate } = require("./Notes.schema")
 const NotesSchema = require("./Notes.schema")
+const _ = require('lodash');
 
 module.exports = class NotesController {
     async create(req, res) {
         console.log("NotesController@create")
         try {
-            let note = await NotesSchema.create(req.body)
+            let data = _.pick(req.body, [
+                'title',
+                'body',
+                'loc',
+            ])
+            data.status = "active"
+            data.userId = req.body.userId
+            data.created_by = req.user.user_name
+            let note = await NotesSchema.create(data)
             return res.status(200).send({ msg: "note created successfully", note })
+        } catch (error) {
+            console.log(error)
+        }
+        return res.status(500).send({ msg: "something went wrong !" })
+
+    }
+    async getByLocation(req, res) {
+        console.log("NotesController@getByLocation")
+        let location = req.body.loc
+        let coordinates = location.coordinates
+        try {
+            let note = await NotesSchema.find({
+                loc: {
+                    coordinates: coordinates
+                }
+            })
+            return res.status(200).send({ msg: "notes fetched successfully", note })
+        } catch (error) {
+            console.log(error)
+        }
+        return res.status(500).send({ msg: "something went wrong !" })
+
+    }
+    async countStatus(req, res) {
+        console.log("NotesController@countStatus")
+        try {
+            let count = await NotesSchema.countDocuments({
+               status:"active"
+            })
+            return res.status(200).send({ msg: "count fetched successfully", count })
         } catch (error) {
             console.log(error)
         }

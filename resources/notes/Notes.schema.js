@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 const NotesSchema = new mongoose.Schema({
     userId: {
         type: mongoose.SchemaTypes.ObjectId,
@@ -11,34 +10,28 @@ const NotesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    body: {
         type: String,
         required: true,
         lowercase: true,
     },
-    tag: {
+    status: {
         type: String,
-        default: 'general'
+        enum: ['active', 'inactive']
     },
-    date: {
-        type: Date,
-        default: Date.now()
+    created_by: {
+        type: String,
+        required: true
     },
     createdAt: {
         type: Date,
         default: Date.now(),
         immutable: true//cannot be changed
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now()
+    loc: {
+        type: { type: String },
+        coordinates: [Number],
     }
-});
-NotesSchema.virtual('user', {
-  ref: 'user',
-  localField: 'userId',
-  foreignField: '_id',
-  justOne: true
 });
 NotesSchema.pre(/^find/, function (next) {
     this.populate({

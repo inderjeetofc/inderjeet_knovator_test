@@ -6,10 +6,8 @@ const validate = new UserValidation()
 const user = new UserController()
 const authorise = require('../../middleWare/authorise')
 const auth = new authorise()
-const multer = require('multer')
 
-const upload = multer({ dest: 'uploads' })
-routes.post('/signup', validate.signup,upload.single('user_img'), user.signup)
-routes.post('/login', validate.login, user.login)
-routes.get('/allUsers', auth.userAuth, user.getAllUsers)
+routes.post('/signup', validate.signup, user.signup) //user signup
+routes.post('/login', validate.login, user.login) //user login to get auth-token
+routes.get('/allUsers', auth.userAuth, user.getAllUsers) //to get all users 
 module.exports = routes

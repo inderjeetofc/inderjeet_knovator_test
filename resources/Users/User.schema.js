@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 
 
 const UserSchema = new mongoose.Schema({
-    first_name: {
+    user_name: {
         type: String,
         minLength: 3,
         required: true
@@ -21,29 +21,11 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    dob: {
-        type: Date,
-        default: () => {
-            return Date.now()
-        }
-    },
+    }, 
     age: {
         type: Number,
         min: 1,
         max: 100
-    },
-    status: {
-        type: String,
-        enum: ['registered', 'guest']
-    },
-    role: {
-        type: String,
-        enum: ['admin', 'user']
-    },
-    profile_img: {
-        type: String,
-        default: 'img/users/pics.jpeg'
     },
     createdAt: {
         type: Date,
